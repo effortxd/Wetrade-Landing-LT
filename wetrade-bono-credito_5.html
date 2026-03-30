@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WeTrade | Bono de Crédito 100% – Hasta $10,000 USD</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange:     #FA5000;
+    --amber:      #FFAA3C;
+    --black:      #0a0a0a;
+    --black-true: #000000;
+    --dark-card:  #141414;
+    --dark-card2: #1a1a1a;
+    --border:     #2a2a2a;
+    --white:      #ffffff;
+    --grey:       #999999;
+    --grey-light: #cccccc;
+    --radius:     12px;
+    --radius-btn: 50px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    overflow-x: hidden;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ─────────────────── NAV ─────────────────── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 300;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 6vw; height: 72px;
+    background: rgba(10,10,10,0.94);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .nav-logo { display:flex; align-items:center; }
+  .nav-right { display: flex; align-items: center; gap: 16px; }
+  .nav-lang { font-size: 12px; font-weight: 500; color: var(--grey-light); }
+  .nav-cta {
+    background: var(--orange); color: var(--white);
+    font-family: 'Montserrat', sans-serif; font-weight: 600; font-size: 13px;
+    padding: 10px 22px; border-radius: var(--radius-btn);
+    text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+    transition: background 0.2s, transform 0.15s; white-space: nowrap;
+  }
+  .nav-cta:hover { background: #e04800; transform: translateY(-1px); }
+
+  /* ─────────────────── HERO ─────────────────── */
+  .hero {
+    min-height: 100vh;
+    display: grid; grid-template-columns: 55% 45%;
+    align-items: center;
+    padding: 72px 6vw 0;
+    position: relative; overflow: hidden;
+    background: var(--black-true);
+  }
+  .hero-glow {
+    position: absolute; right: 0; top: 50%; transform: translateY(-50%);
+    width: 55%; height: 90%;
+    background: radial-gradient(ellipse 70% 70% at 65% 50%,
+      rgba(250,80,0,0.26) 0%, rgba(250,80,0,0.09) 40%, transparent 70%);
+    pointer-events: none; z-index: 0;
+  }
+  .hero::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 180px;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.45), transparent);
+    z-index: 0; pointer-events: none;
+  }
+  .hero-left { position: relative; z-index: 2; padding: 72px 0 88px; padding-right: 48px; }
+  .hero-right { position: relative; z-index: 2; display: flex; align-items: center; justify-content: center; }
+
+  /* Offer badge */
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(250,80,0,0.12); border: 1px solid rgba(250,80,0,0.35);
+    border-radius: 50px; padding: 8px 18px;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--orange); margin-bottom: 22px;
+  }
+  .badge-dot {
+    width: 6px; height: 6px; border-radius: 50%; background: var(--orange);
+    animation: blink 2s ease-in-out infinite; flex-shrink: 0;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+  /* Flags strip */
+  .flags-strip {
+    display: flex; align-items: center; gap: 5px; flex-wrap: wrap; margin-bottom: 28px;
+  }
+  .flags-label {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--grey); margin-right: 2px; white-space: nowrap;
+  }
+  .flag-item {
+    display: inline-flex; align-items: center; gap: 3px;
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 5px; padding: 2px 6px; font-size: 12px;
+    transition: background 0.2s; cursor: default;
+  }
+  .flag-item:hover { background: rgba(250,80,0,0.1); border-color: rgba(250,80,0,0.3); }
+  .flag-name { font-size: 9px; font-weight: 500; color: var(--grey); line-height: 1; }
+
+  /* Countdown */
+  .countdown-wrap {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+    border-radius: 10px; padding: 12px 20px; margin-bottom: 32px;
+  }
+  .cd-label { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--grey); white-space: nowrap; }
+  .cd-unit { display: flex; flex-direction: column; align-items: center; gap: 2px; min-width: 38px; }
+  .cd-num { font-size: 22px; font-weight: 700; color: var(--orange); line-height: 1; letter-spacing: -0.02em; }
+  .cd-uname { font-size: 9px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--grey); }
+  .cd-colon { font-size: 18px; font-weight: 700; color: rgba(255,255,255,0.2); line-height: 1; align-self: flex-start; margin-top: 2px; animation: cblink 1s step-end infinite; }
+  @keyframes cblink { 0%,100%{opacity:1} 50%{opacity:0.15} }
+
+  /* Headline */
+  .hero h1 { font-size: clamp(30px, 3.8vw, 54px); font-weight: 700; line-height: 1.18; color: var(--orange); margin-bottom: 14px; }
+  .hero h1 .w { color: var(--white); }
+  .hero-sub { font-size: clamp(13px, 1.3vw, 15px); font-weight: 400; color: var(--grey-light); max-width: 480px; line-height: 1.75; margin-bottom: 36px; }
+
+  /* Stats bar */
+  .hero-stats { display: flex; gap: 0; margin-bottom: 44px; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; width: fit-content; background: var(--dark-card); }
+  .h-stat { padding: 20px 32px; border-right: 1px solid var(--border); text-align: center; }
+  .h-stat:last-child { border-right: none; }
+  .h-stat-val { font-size: 24px; font-weight: 700; color: var(--orange); line-height: 1; letter-spacing: -0.01em; }
+  .h-stat-lbl { font-size: 9px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--grey); margin-top: 6px; }
+
+  /* CTAs */
+  .hero-ctas { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .btn-orange {
+    background: var(--orange); color: var(--white);
+    font-family: 'Montserrat', sans-serif; font-weight: 600; font-size: 14px;
+    padding: 14px 32px; border-radius: var(--radius-btn); text-decoration: none;
+    display: inline-flex; align-items: center; gap: 10px;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    box-shadow: 0 4px 28px rgba(250,80,0,0.35);
+  }
+  .btn-orange:hover { background: #e04800; transform: translateY(-2px); box-shadow: 0 8px 40px rgba(250,80,0,0.5); }
+  .btn-orange svg { width: 15px; height: 15px; }
+  .btn-outline {
+    font-size: 13px; font-weight: 600; color: var(--grey-light); text-decoration: none;
+    border: 1px solid var(--border); border-radius: var(--radius-btn); padding: 13px 26px;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-outline:hover { border-color: var(--orange); color: var(--orange); }
+  .hero-footnote { margin-top: 24px; font-size: 11px; font-weight: 400; color: var(--grey); }
+  .hero-footnote span { color: var(--amber); font-weight: 600; }
+
+  /* ─────────────────── BONUS CARD (premium) ─────────────────── */
+  .bonus-visual {
+    position: relative; padding: 20px 20px 40px;
+    display: flex; align-items: center; justify-content: center;
+    min-height: 580px;
+  }
+  /* Ambient glow rings */
+  .bonus-glow-ring {
+    position: absolute; width: 520px; height: 520px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(250,80,0,0.17) 0%, rgba(250,80,0,0.05) 45%, transparent 70%);
+    animation: pulse-ring 3s ease-in-out infinite; z-index: 0;
+  }
+  @keyframes pulse-ring { 0%,100%{transform:scale(1);opacity:.7} 50%{transform:scale(1.08);opacity:1} }
+  .bonus-spin-ring {
+    position: absolute; width: 460px; height: 460px; border-radius: 50%;
+    border: 1px dashed rgba(250,80,0,0.2);
+    animation: spin-slow 18s linear infinite; z-index: 0;
+  }
+  .bonus-spin-ring2 {
+    position: absolute; width: 420px; height: 420px; border-radius: 50%;
+    border: 1px solid rgba(255,170,60,0.1);
+    animation: spin-slow 28s linear infinite reverse; z-index: 0;
+  }
+  @keyframes spin-slow { to { transform: rotate(360deg); } }
+  /* Particles */
+  .bp {
+    position: absolute; border-radius: 50%; background: var(--orange);
+    opacity: 0; animation: pdrift 4s ease-in-out infinite; z-index: 0;
+  }
+  .bp1{width:6px;height:6px;top:16%;left:20%;animation-delay:0s}
+  .bp2{width:4px;height:4px;top:11%;right:26%;animation-delay:.9s;background:var(--amber)}
+  .bp3{width:5px;height:5px;bottom:20%;left:17%;animation-delay:1.7s}
+  .bp4{width:3px;height:3px;bottom:15%;right:20%;animation-delay:2.5s;background:var(--amber)}
+  .bp5{width:4px;height:4px;top:52%;left:9%;animation-delay:3.3s}
+  .bp6{width:5px;height:5px;top:33%;right:11%;animation-delay:.5s;background:var(--amber)}
+  @keyframes pdrift { 0%{opacity:0;transform:translateY(0) scale(1)} 30%{opacity:.8} 70%{opacity:.5} 100%{opacity:0;transform:translateY(-26px) scale(.4)} }
+  /* Card */
+  .bonus-card {
+    position: relative; z-index: 2;
+    width: 400px;
+    background: linear-gradient(160deg, #242424 0%, #161616 40%, #0e0e0e 100%);
+    border-radius: 24px; padding: 52px 48px 48px; text-align: center;
+    box-shadow: 0 0 0 1px rgba(250,80,0,0.28), 0 0 40px rgba(250,80,0,0.2), 0 0 80px rgba(250,80,0,0.09), 0 32px 64px rgba(0,0,0,0.65);
+    animation: float-card 5s ease-in-out infinite; overflow: hidden;
+  }
+  @keyframes float-card { 0%,100%{transform:translateY(0) rotate(-.5deg)} 50%{transform:translateY(-16px) rotate(.5deg)} }
+  /* Shimmer */
+  .bonus-card::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.04) 48%, rgba(255,255,255,0.07) 50%, rgba(255,255,255,0.04) 52%, transparent 70%);
+    animation: shimmer 3.5s ease-in-out infinite; border-radius: 24px; pointer-events: none;
+  }
+  @keyframes shimmer { 0%{transform:translateX(-100%) skewX(-15deg);opacity:0} 20%{opacity:1} 80%{opacity:1} 100%{transform:translateX(200%) skewX(-15deg);opacity:0} }
+  /* Animated top bar */
+  .bonus-card::after {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--orange), var(--amber), var(--orange));
+    background-size: 200% 100%;
+    animation: gradslide 2.5s linear infinite; border-radius: 24px 24px 0 0;
+  }
+  @keyframes gradslide { 0%{background-position:0% 0%} 100%{background-position:200% 0%} }
+
+  .bc-eyebrow { font-size: 10px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--grey); margin-bottom: 16px; }
+  .bc-pct {
+    font-size: 108px; font-weight: 800; line-height: .88; color: var(--orange);
+    letter-spacing: -0.05em; position: relative; z-index: 1;
+    text-shadow: 0 0 40px rgba(250,80,0,0.5), 0 0 80px rgba(250,80,0,0.2);
+    animation: glow-pulse 2.5s ease-in-out infinite;
+  }
+  @keyframes glow-pulse { 0%,100%{text-shadow:0 0 30px rgba(250,80,0,.45),0 0 60px rgba(250,80,0,.18)} 50%{text-shadow:0 0 55px rgba(250,80,0,.75),0 0 110px rgba(250,80,0,.35)} }
+  .bc-label { font-size: 15px; font-weight: 600; color: var(--white); margin-top: 8px; position: relative; z-index: 1; }
+  .bc-divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(250,80,0,0.35), transparent); margin: 22px 0; }
+  .bc-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; position: relative; z-index: 1; }
+  .bc-row:last-of-type { margin-bottom: 0; }
+  .bc-key { font-size: 12px; font-weight: 500; color: var(--grey); text-align: left; }
+  .bc-val { font-size: 13px; font-weight: 600; color: var(--white); }
+  .bc-val.hi { color: var(--orange); text-shadow: 0 0 16px rgba(250,80,0,0.4); }
+  .bc-btn {
+    display: block; margin-top: 24px; position: relative; z-index: 1;
+    background: linear-gradient(90deg, var(--orange), #ff6820, var(--orange));
+    background-size: 200% 100%; animation: gradslide 2s linear infinite;
+    color: var(--white); font-family: 'Montserrat', sans-serif;
+    font-weight: 700; font-size: 13px; letter-spacing: 0.06em;
+    padding: 13px 0; border-radius: 50px; text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 20px rgba(250,80,0,0.4);
+  }
+  .bc-btn:hover { transform: translateY(-2px) scale(1.02); box-shadow: 0 8px 32px rgba(250,80,0,0.6); }
+
+  /* ─────────────────── SECTION COMMONS ─────────────────── */
+  section { padding: 100px 6vw; }
+  .sec-label { font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--orange); margin-bottom: 12px; }
+  .sec-title { font-size: clamp(24px, 3.2vw, 40px); font-weight: 700; line-height: 1.22; color: var(--orange); margin-bottom: 14px; }
+  .sec-title .w { color: var(--white); }
+  .sec-lead { font-size: 14px; font-weight: 400; color: var(--grey-light); max-width: 560px; line-height: 1.75; }
+
+  /* ─────────────────── HOW IT WORKS ─────────────────── */
+  .how { background: var(--dark-card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .how-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-top: 64px; }
+  .how-card {
+    background: var(--black); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 44px 34px; position: relative; overflow: hidden;
+    transition: border-color .25s, transform .25s;
+  }
+  .how-card:hover { border-color: rgba(250,80,0,.4); transform: translateY(-4px); }
+  .how-card::before {
+    content:''; position: absolute; top:0; left:0; right:0; height:3px;
+    background: var(--orange); border-radius: var(--radius) var(--radius) 0 0;
+    opacity:0; transition: opacity .25s;
+  }
+  .how-card:hover::before { opacity:1; }
+  .how-n { position: absolute; top:14px; right:18px; font-size:50px; font-weight:800; color:rgba(250,80,0,.06); line-height:1; letter-spacing:-0.04em; }
+  .how-ico { width:50px; height:50px; background:rgba(250,80,0,.1); border:1px solid rgba(250,80,0,.2); border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:22px; margin-bottom:20px; }
+  .how-card h3 { font-size:14px; font-weight:600; margin-bottom:10px; line-height:1.35; }
+  .how-card p { font-size:13px; font-weight:400; color:var(--grey-light); line-height:1.7; }
+
+  /* ─────────────────── SCENARIOS ─────────────────── */
+  .sc-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:24px; margin-top:64px; }
+  .sc {
+    background:var(--dark-card); border:1px solid var(--border); border-radius:var(--radius);
+    padding:40px 34px; position:relative; overflow:hidden; transition:border-color .25s,transform .25s;
+  }
+  .sc:hover { transform:translateY(-4px); }
+  .sc-top { height:4px; position:absolute; top:0; left:0; right:0; border-radius:var(--radius) var(--radius) 0 0; }
+  .sc-g .sc-top{background:linear-gradient(90deg,#27AE60,#2ECC71)} .sc-g:hover{border-color:rgba(39,174,96,.4)}
+  .sc-r .sc-top{background:linear-gradient(90deg,#C0392B,#E74C3C)} .sc-r:hover{border-color:rgba(192,57,43,.4)}
+  .sc-a .sc-top{background:linear-gradient(90deg,#E67E22,var(--amber))} .sc-a:hover{border-color:rgba(255,170,60,.4)}
+  .sc-icon{font-size:30px;display:block;margin-bottom:14px}
+  .sc h3{font-size:13px;font-weight:700;letter-spacing:.04em;margin-bottom:16px;text-transform:uppercase}
+  .sc-g h3{color:#2ECC71} .sc-r h3{color:#E74C3C} .sc-a h3{color:var(--amber)}
+  .sc ul{list-style:none}
+  .sc li{font-size:13px;font-weight:400;color:var(--grey-light);padding:8px 0 8px 18px;border-bottom:1px solid #222;position:relative;line-height:1.5}
+  .sc li:last-child{border-bottom:none}
+  .sc-g li::before{content:'✓';position:absolute;left:0;color:#2ECC71;font-weight:700;font-size:11px;top:9px}
+  .sc-r li::before{content:'!';position:absolute;left:2px;color:#E74C3C;font-weight:700;font-size:11px;top:9px}
+  .sc-a li::before{content:'›';position:absolute;left:1px;color:var(--amber);font-weight:700;font-size:14px;top:7px}
+
+  /* ─────────────────── STEPS ─────────────────── */
+  .steps { background:var(--dark-card); border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
+  .steps-wrap { display:grid; grid-template-columns:repeat(3,1fr); gap:0; margin-top:64px; border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; }
+  .step { padding:52px 36px; text-align:center; border-right:1px solid var(--border); background:var(--black); transition:background .2s; }
+  .step:last-child{border-right:none}
+  .step:hover{background:#0e0e0e}
+  .step-num { width:54px; height:54px; background:var(--orange); color:var(--white); font-weight:700; font-size:19px; border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 20px; }
+  .step h3{font-size:14px;font-weight:600;margin-bottom:10px;line-height:1.35}
+  .step p{font-size:13px;font-weight:400;color:var(--grey-light);line-height:1.65}
+  .step a{color:var(--amber);text-decoration:none;font-weight:600}
+
+  /* ─────────────────── LEAD FORM ─────────────────── */
+  .form-section {
+    background: var(--dark-card);
+    /* top/bottom gradient borders instead of flat lines */
+    border-top: none; border-bottom: none;
+    position: relative;
+  }
+  /* Gradient top & bottom "borders" */
+  .form-section::before,
+  .form-section::after {
+    content: '';
+    position: absolute; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent 0%, rgba(250,80,0,0.4) 30%, rgba(250,80,0,0.4) 70%, transparent 100%);
+  }
+  .form-section::before { top: 0; }
+  .form-section::after  { bottom: 0; }
+
+  .form-inner {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 80px; align-items: start;
+    max-width: 1200px;
+  }
+  .form-copy { padding-top: 8px; }
+  .form-copy .sec-label { margin-bottom: 12px; }
+  .form-copy .sec-title { margin-bottom: 16px; }
+  .form-copy .sec-lead { margin-bottom: 32px; }
+  .form-perks { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+  .form-perks li {
+    display: flex; align-items: center; gap: 14px;
+    font-size: 13px; font-weight: 500; color: var(--grey-light);
+    padding: 10px 14px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 10px;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .form-perks li:hover {
+    background: rgba(250,80,0,0.05);
+    border-color: rgba(250,80,0,0.2);
+  }
+  .form-perks li .perk-ico {
+    width: 36px; height: 36px; flex-shrink: 0;
+    background: rgba(250,80,0,0.1); border: 1px solid rgba(250,80,0,0.2);
+    border-radius: 10px; display: flex; align-items: center; justify-content: center;
+    font-size: 17px;
+  }
+
+  /* WeTrade iframe wrapper */
+  /* Simple dark card — clean, no colour clash */
+  .iframe-outer {
+    border-radius: 20px;
+    border: 1px solid #2a2a2a;
+    background: #111111;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    overflow: hidden;
+    position: relative;
+  }
+  /* Subtle orange top line only */
+  .iframe-outer::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--orange), var(--amber), var(--orange));
+    background-size: 200% 100%;
+    animation: gradslide 2.5s linear infinite;
+    z-index: 10;
+  }
+  /* Inner wrap adds the padding around the iframe */
+  .iframe-wrap {
+    padding: 20px;
+    background: #111111;
+  }
+  /* iframe has its own dark background and rounded corners */
+  .iframe-wrap iframe {
+    display: block;
+    width: 100%;
+    min-height: 720px;
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #111111;
+  }
+  /* Header bar */
+  .iframe-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 24px 14px;
+    background: #111111;
+    border-bottom: 1px solid #1e1e1e;
+    position: relative; z-index: 1;
+  }
+  .iframe-header-left { display: flex; align-items: center; gap: 10px; }
+  .iframe-header-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--orange);
+    animation: blink 2s ease-in-out infinite;
+  }
+  .iframe-header-title { font-size: 13px; font-weight: 600; color: var(--white); }
+  .iframe-header-sub { font-size: 11px; font-weight: 400; color: var(--grey); }
+  .iframe-badge {
+    background: rgba(250,80,0,0.1);
+    border: 1px solid rgba(250,80,0,0.25);
+    border-radius: 50px;
+    padding: 4px 12px;
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--orange);
+  }
+
+  /* ── Form fields ── */
+  .frow { margin-bottom: 24px; }
+  .frow label {
+    display: block;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--grey-light);
+    margin-bottom: 10px;
+  }
+  .frow input, .frow select {
+    width: 100%;
+    padding: 16px 20px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid #383838;
+    border-radius: 12px;
+    color: var(--white);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px; font-weight: 400;
+    outline: none;
+    transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+    -webkit-appearance: none;
+  }
+  .frow input::placeholder { color: #444; }
+  .frow input:focus, .frow select:focus {
+    border-color: var(--orange);
+    background: rgba(250,80,0,0.04);
+    box-shadow: 0 0 0 3px rgba(250,80,0,0.1);
+  }
+  .frow select { cursor: pointer; color: var(--grey-light); }
+  .frow select option { background: #1a1a1a; color: var(--white); }
+  .frow-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  /* Phone field — combined selector + input in one box */
+  .phone-box {
+    display: flex; align-items: stretch;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid #383838;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+  }
+  .phone-box:focus-within {
+    border-color: var(--orange);
+    background: rgba(250,80,0,0.04);
+    box-shadow: 0 0 0 3px rgba(250,80,0,0.1);
+  }
+  .phone-box select {
+    width: auto; min-width: 120px; flex-shrink: 0;
+    padding: 16px 12px 16px 18px;
+    background: rgba(255,255,255,0.06);
+    border: none;
+    border-right: 1px solid #383838;
+    color: var(--grey-light);
+    font-family: 'Montserrat', sans-serif; font-size: 14px;
+    outline: none; cursor: pointer;
+    -webkit-appearance: none; appearance: none;
+  }
+  .phone-box select:focus { outline: none; }
+  .phone-box input[type="tel"] {
+    flex: 1; width: 0; min-width: 0;
+    padding: 16px 18px;
+    background: transparent; border: none;
+    color: var(--white);
+    font-family: 'Montserrat', sans-serif; font-size: 14px;
+    outline: none;
+  }
+  .phone-box input[type="tel"]::placeholder { color: #444; }
+
+  .fcheckbox {
+    display: flex; align-items: flex-start; gap: 12px;
+    margin-top: 8px; margin-bottom: 28px; cursor: pointer;
+  }
+  .fcheckbox input[type="checkbox"] {
+    width: 18px; height: 18px; flex-shrink: 0; margin-top: 2px;
+    accent-color: var(--orange); cursor: pointer;
+  }
+  .fcheckbox span { font-size: 12px; font-weight: 400; color: var(--grey); line-height: 1.6; }
+  .fcheckbox a { color: var(--amber); text-decoration: none; }
+
+  .form-submit {
+    width: 100%; padding: 18px;
+    background: var(--orange); color: var(--white);
+    font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 14px;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    border: none; border-radius: 50px; cursor: pointer;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    box-shadow: 0 6px 28px rgba(250,80,0,0.4);
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+  }
+  .form-submit:hover { background: #e04800; transform: translateY(-2px); box-shadow: 0 10px 40px rgba(250,80,0,0.55); }
+  .form-submit svg { width: 16px; height: 16px; }
+  .form-note { font-size: 11px; color: #444; text-align: center; margin-top: 16px; line-height: 1.5; }
+
+  /* Success state */
+  .form-success {
+    display: none; text-align: center; padding: 20px 0 10px;
+  }
+  .form-success .success-ico { font-size: 48px; margin-bottom: 16px; display: block; }
+  .form-success h3 { font-size: 18px; font-weight: 700; color: var(--white); margin-bottom: 8px; }
+  .form-success p { font-size: 13px; color: var(--grey-light); line-height: 1.6; }
+  .form-success span { color: var(--amber); font-weight: 600; }
+  .form-note { font-size: 10px; color: #555; text-align: center; margin-top: 14px; line-height: 1.5; }
+
+  /* ─────────────────── KEY TERMS ─────────────────── */
+  .terms-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:16px; margin-top:64px; }
+  .t { background:var(--dark-card); border:1px solid var(--border); border-radius:var(--radius); padding:28px 26px; display:flex; gap:18px; align-items:flex-start; transition:border-color .2s,transform .2s; }
+  .t:hover{border-color:rgba(250,80,0,.3);transform:translateY(-2px)}
+  .t-ico{flex-shrink:0;width:40px;height:40px;background:rgba(250,80,0,.1);border:1px solid rgba(250,80,0,.2);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px}
+  .t-body strong{display:block;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--orange);margin-bottom:5px}
+  .t-body span{font-size:12px;font-weight:400;color:var(--grey-light)}
+  .t-body a{color:var(--amber);text-decoration:none;font-weight:600}
+
+  /* ─────────────────── CTA BAND ─────────────────── */
+  .cta-band { background:var(--orange); padding:88px 6vw; position:relative; overflow:hidden; }
+  .cta-band::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 50% 120% at 90% 50%,rgba(255,140,60,.35) 0%,transparent 60%); pointer-events:none; }
+  .cta-band-inner { position:relative; z-index:1; display:flex; align-items:center; justify-content:space-between; gap:32px; flex-wrap:wrap; }
+  .cta-band-copy h2 { font-size:clamp(24px,3.2vw,42px); font-weight:700; line-height:1.2; color:var(--white); margin-bottom:10px; }
+  .cta-band-copy p { font-size:14px; font-weight:400; color:rgba(255,255,255,.82); }
+  .cta-band-copy a { color:var(--white); font-weight:600; }
+  .btn-white { background:var(--white); color:var(--orange); font-family:'Montserrat',sans-serif; font-weight:700; font-size:14px; padding:14px 34px; border-radius:var(--radius-btn); text-decoration:none; display:inline-flex; align-items:center; gap:10px; transition:background .15s,transform .15s; white-space:nowrap; flex-shrink:0; }
+  .btn-white:hover{background:#f5f5f5;transform:translateY(-2px)}
+  .btn-white svg{width:15px;height:15px}
+
+  /* ─────────────────── DISCLAIMER ─────────────────── */
+  .disc { background:#060606; padding:64px 6vw; border-top:1px solid var(--border); }
+  .disc-title { font-size:10px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:#555; margin-bottom:16px; }
+  .disc p { font-size:11px; font-weight:400; color:#444; line-height:1.9; max-width:960px; margin-bottom:10px; }
+  .disc p:last-child{margin-bottom:0}
+
+  /* ─────────────────── FOOTER ─────────────────── */
+  footer { background:var(--black-true); padding:36px 6vw; border-top:1px solid rgba(255,255,255,.05); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+  .footer-brand{display:flex;align-items:center;}
+  footer p{font-size:11px;font-weight:400;color:#444}
+
+  /* ─────────────────── REVEAL ─────────────────── */
+  .reveal { opacity:0; transform:translateY(22px); transition:opacity .65s ease,transform .65s ease; }
+  .reveal.on { opacity:1; transform:none; }
+  /* hero-left is never hidden — it's above the fold */
+  .hero-left { opacity:1; transform:none; }
+
+  /* ─────────────────── RESPONSIVE ─────────────────── */
+  @media(max-width:1024px){
+    .form-inner{grid-template-columns:1fr;gap:48px}
+  }
+  @media(max-width:900px){
+    .hero{grid-template-columns:1fr;padding-bottom:60px}
+    .hero-right{display:none}
+    .hero-glow{opacity:.25}
+    .steps-wrap{grid-template-columns:1fr}
+    .step{border-right:none;border-bottom:1px solid var(--border)}
+    .step:last-child{border-bottom:none}
+  }
+  @media(max-width:640px){
+    section{padding:56px 4vw}
+    .hero{padding:70px 4vw 56px}
+    .hero-left{padding:32px 0 32px}
+    .nav-cta{font-size:11px;padding:9px 14px}
+    .nav-lang{display:none}
+    .hero-badge{font-size:10px;padding:5px 13px;letter-spacing:.04em;white-space:normal;line-height:1.5;display:inline-flex;flex-wrap:wrap;gap:2px}
+    .flags-strip{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:4px;gap:4px;margin-left:-4vw;margin-right:-4vw;padding-left:4vw;padding-right:4vw}
+    .flags-strip::-webkit-scrollbar{display:none}
+    .flags-label{flex-shrink:0;white-space:nowrap}
+    .flag-item{flex-shrink:0;padding:4px 6px;font-size:16px;border-radius:6px}
+    .flag-name{display:none}
+    .countdown-wrap{width:100%;justify-content:center;gap:6px;padding:8px 14px;flex-wrap:nowrap}
+    .cd-label{display:none}
+    .cd-num{font-size:20px}
+    .cd-uname{font-size:8px}
+    .cd-colon{font-size:16px;margin-top:1px}
+    .cd-unit{min-width:34px}
+    .hero h1{font-size:clamp(26px,7.5vw,38px)}
+    .hero-sub{font-size:13px;margin-bottom:28px}
+    .hero-stats{flex-direction:row;overflow-x:auto;width:100%;-webkit-overflow-scrolling:touch}
+    .h-stat{flex-shrink:0;border-right:1px solid var(--border);border-bottom:none;padding:14px 18px}
+    .h-stat:last-child{border-right:none}
+    .h-stat-val{font-size:20px}
+    .hero-ctas{flex-direction:column;align-items:stretch}
+    .btn-orange{justify-content:center}
+    .btn-outline{text-align:center}
+    .how-grid{grid-template-columns:1fr}
+    .sc-grid{grid-template-columns:1fr}
+    .frow-2{grid-template-columns:1fr}
+    .iframe-outer{border-radius:14px}.iframe-wrap{padding:12px}
+    .terms-grid{grid-template-columns:1fr}
+    .cta-band{padding:52px 4vw}
+    .cta-band-inner{flex-direction:column;align-items:flex-start;gap:20px}
+    .cta-band-copy h2{font-size:clamp(22px,6vw,32px)}
+    .btn-white{width:100%;justify-content:center}
+  }
+  @media(max-width:380px){
+    .hero-badge{font-size:9px}
+    .cd-num{font-size:17px}
+    .nav-cta{font-size:10px;padding:8px 12px}
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══ -->
+<nav>
+  <div class="nav-logo"><img src="data:image/png;base64,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" alt="WeTrade" style="height:32px;display:block;mix-blend-mode:screen;"></div>
+  <div class="nav-right">
+    <span class="nav-lang">🌐 ES</span>
+    <a href="#formulario" class="nav-cta">¡Activar mi bono ahora!</a>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="hero-glow"></div>
+
+  <div class="hero-left">
+    <!-- Badge -->
+    <div class="hero-badge">
+      <div class="badge-dot"></div>
+      Oferta exclusiva LATAM &nbsp;·&nbsp; Válida hasta 31 dic 2026
+    </div>
+
+    <!-- Flags -->
+    <div class="flags-strip">
+      <span class="flags-label">Disponible en:</span>
+      <span class="flag-item" title="México">🇲🇽<span class="flag-name">MX</span></span>
+      <span class="flag-item" title="Colombia">🇨🇴<span class="flag-name">CO</span></span>
+      <span class="flag-item" title="Argentina">🇦🇷<span class="flag-name">AR</span></span>
+      <span class="flag-item" title="Chile">🇨🇱<span class="flag-name">CL</span></span>
+      <span class="flag-item" title="Perú">🇵🇪<span class="flag-name">PE</span></span>
+      <span class="flag-item" title="Venezuela">🇻🇪<span class="flag-name">VE</span></span>
+      <span class="flag-item" title="Ecuador">🇪🇨<span class="flag-name">EC</span></span>
+      <span class="flag-item" title="Guatemala">🇬🇹<span class="flag-name">GT</span></span>
+      <span class="flag-item" title="Bolivia">🇧🇴<span class="flag-name">BO</span></span>
+      <span class="flag-item" title="Rep. Dominicana">🇩🇴<span class="flag-name">DO</span></span>
+      <span class="flag-item" title="Honduras">🇭🇳<span class="flag-name">HN</span></span>
+      <span class="flag-item" title="Paraguay">🇵🇾<span class="flag-name">PY</span></span>
+      <span class="flag-item" title="El Salvador">🇸🇻<span class="flag-name">SV</span></span>
+      <span class="flag-item" title="Nicaragua">🇳🇮<span class="flag-name">NI</span></span>
+      <span class="flag-item" title="Costa Rica">🇨🇷<span class="flag-name">CR</span></span>
+      <span class="flag-item" title="Panamá">🇵🇦<span class="flag-name">PA</span></span>
+      <span class="flag-item" title="Uruguay">🇺🇾<span class="flag-name">UY</span></span>
+      <span class="flag-item" title="Cuba">🇨🇺<span class="flag-name">CU</span></span>
+    </div>
+
+    <!-- Countdown -->
+    <div class="countdown-wrap">
+      <span class="cd-label">⏳ Oferta vence en</span>
+      <div class="cd-unit"><span class="cd-num" id="cd-days">000</span><span class="cd-uname">días</span></div>
+      <span class="cd-colon">:</span>
+      <div class="cd-unit"><span class="cd-num" id="cd-hours">00</span><span class="cd-uname">horas</span></div>
+      <span class="cd-colon">:</span>
+      <div class="cd-unit"><span class="cd-num" id="cd-mins">00</span><span class="cd-uname">min</span></div>
+      <span class="cd-colon">:</span>
+      <div class="cd-unit"><span class="cd-num" id="cd-secs">00</span><span class="cd-uname">seg</span></div>
+    </div>
+
+    <!-- Headline -->
+    <h1>¡Duplica tu Capital Hoy!<br><span class="w">Obtén tu Bono del 100%</span></h1>
+    <p class="hero-sub">Deposita desde $100 USD y te igualamos al 100% — tienes hasta $10,000 USD adicionales para operar desde mañana.</p>
+
+    <!-- Stats -->
+    <div class="hero-stats">
+      <div class="h-stat"><div class="h-stat-val">$10,000</div><div class="h-stat-lbl">Bono máximo</div></div>
+      <div class="h-stat"><div class="h-stat-val">100%</div><div class="h-stat-lbl">Igualación</div></div>
+      <div class="h-stat"><div class="h-stat-val">$100</div><div class="h-stat-lbl">Depósito mínimo</div></div>
+    </div>
+
+    <!-- CTAs -->
+    <div class="hero-ctas">
+      <a href="#formulario" class="btn-orange">
+        ¡Activar mi bono ahora!
+        <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="#como-funciona" class="btn-outline">¿Cómo funciona?</a>
+    </div>
+    <p class="hero-footnote">Para activar, envía un correo a <a href="mailto:globalsupport@wetrade.com" style="color:var(--amber);font-weight:600;">globalsupport@wetrade.com</a> tras tu depósito.</p>
+  </div>
+
+  <!-- Bonus card -->
+  <div class="hero-right">
+    <div class="bonus-visual">
+      <div class="bonus-glow-ring"></div>
+      <div class="bonus-spin-ring"></div>
+      <div class="bonus-spin-ring2"></div>
+      <div class="bp bp1"></div><div class="bp bp2"></div><div class="bp bp3"></div>
+      <div class="bp bp4"></div><div class="bp bp5"></div><div class="bp bp6"></div>
+      <div class="bonus-card">
+        <div class="bc-eyebrow">✦ Bono de crédito exclusivo ✦</div>
+        <div class="bc-pct">100%</div>
+        <div class="bc-label">de tu depósito</div>
+        <div class="bc-divider"></div>
+        <div class="bc-row"><span class="bc-key">Depósito mínimo</span><span class="bc-val">$100 USD</span></div>
+        <div class="bc-row"><span class="bc-key">Bono máximo</span><span class="bc-val hi">$10,000 USD</span></div>
+        <div class="bc-row"><span class="bc-key">Se acredita en</span><span class="bc-val">1 día hábil</span></div>
+        <div class="bc-row"><span class="bc-key">Válido hasta</span><span class="bc-val">31 Dic 2026</span></div>
+        <div class="bc-row"><span class="bc-key">Elegibilidad</span><span class="bc-val">Todo LATAM</span></div>
+        <a href="#formulario" class="bc-btn">¡Activar mi bono ahora!</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ HOW IT WORKS ═══ -->
+<section class="how" id="como-funciona">
+  <div class="reveal">
+    <div class="sec-label">Cómo funciona</div>
+    <h2 class="sec-title">El trading confiable <span class="w">comienza aquí</span></h2>
+    <p class="sec-lead">El bono se acredita directamente como margen adicional — amplía tu capacidad sin necesidad de capital extra.</p>
+  </div>
+  <div class="how-grid reveal">
+    <div class="how-card">
+      <div class="how-n">01</div><div class="how-ico">💳</div>
+      <h3>¡Deposita y duplícalo al instante!</h3>
+      <p>Haz tu depósito desde $100 USD y en menos de 24 horas tu cuenta ya tendrá el doble para operar.</p>
+    </div>
+    <div class="how-card">
+      <div class="how-n">02</div><div class="how-ico">📈</div>
+      <h3>Opera con el doble de poder</h3>
+      <p>Tu bono se suma a tu saldo como margen real. Abre posiciones más grandes, gestiona mejor tu riesgo y aprovecha más oportunidades.</p>
+    </div>
+    <div class="how-card">
+      <div class="how-n">03</div><div class="how-ico">💰</div>
+      <h3>Tus ganancias son tuyas — retíralas cuando quieras</h3>
+      <p>El 100% de lo que ganes es retirable de inmediato. Tu depósito también siempre está disponible. Sin letra chica.</p>
+    </div>
+    <div class="how-card">
+      <div class="how-n">04</div><div class="how-ico">🛡️</div>
+      <h3>Tu bono trabaja contigo todo el tiempo</h3>
+      <p>El bono permanece activo como respaldo de margen mientras sigas operando. Es tu colchón de seguridad adicional.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SCENARIOS ═══ -->
+<section>
+  <div class="reveal">
+    <div class="sec-label">Escenarios clave</div>
+    <h2 class="sec-title">Todo lo que necesitas <span class="w">saber antes de operar</span></h2>
+    <p class="sec-lead">Comprende cómo se comporta el bono en ganancias, pérdidas y retiros — planifica cada operación con confianza.</p>
+  </div>
+  <div class="sc-grid reveal">
+    <div class="sc sc-g">
+      <div class="sc-top"></div><span class="sc-icon">📊</span><h3>Si generas ganancias</h3>
+      <ul>
+        <li>Todas las ganancias de trading son 100% retirables</li>
+        <li>Tu depósito original también está disponible para retirar</li>
+        <li>El bono permanece activo como soporte de margen</li>
+      </ul>
+    </div>
+    <div class="sc sc-r">
+      <div class="sc-top"></div><span class="sc-icon">⚠️</span><h3>Si generas pérdidas</h3>
+      <ul>
+        <li>Las pérdidas reducen el equity total de la cuenta</li>
+        <li>El bono <strong style="color:#fff">no</strong> disminuye operación por operación</li>
+        <li>Cuando Equity = Crédito, el bono se elimina automáticamente</li>
+        <li>En ese momento, el saldo de tu cuenta será $0</li>
+      </ul>
+    </div>
+    <div class="sc sc-a">
+      <div class="sc-top"></div><span class="sc-icon">🏦</span><h3>Si realizas un retiro</h3>
+      <ul>
+        <li>Cualquier retiro genera una reducción proporcional del bono</li>
+        <li>Las transferencias internas se tratan igual que los retiros</li>
+        <li>Un bono reducido puede afectar tu margen disponible</li>
+        <li>Puede generar un margin call o stop-out si el margen es insuficiente</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ STEPS ═══ -->
+<section class="steps">
+  <div class="reveal">
+    <div class="sec-label">Primeros pasos</div>
+    <h2 class="sec-title">3 pasos. 5 minutos. <span class="w">Tu bono del 100% activo.</span></h2>
+    <p class="sec-lead">El éxito comienza dando el primer paso.</p>
+  </div>
+  <div class="steps-wrap reveal">
+    <div class="step">
+      <div class="step-num">01</div><h3>Regístrate</h3>
+      <p>Abre una cuenta WeTrade sin costo. Puedes usar una cuenta nueva o una cuenta existente elegible.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div><h3>Deposita</h3>
+      <p>Deposita un mínimo de $100 USD para ser elegible para el bono de crédito del 100%.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div><h3>Solicita tu bono</h3>
+      <p>Envía un correo a <a href="mailto:globalsupport@wetrade.com" style="color:var(--amber);font-weight:600;">globalsupport@wetrade.com</a> y recibe tu bono en menos de 24 horas.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ LEAD FORM ═══ -->
+<section class="form-section" id="formulario">
+  <div class="form-inner reveal">
+
+    <!-- Left: copy -->
+    <div class="form-copy">
+      <div class="sec-label">Activa tu bono</div>
+      <h2 class="sec-title">¿Listo para empezar?<br><span class="w">Regístrate en 2 minutos.</span></h2>
+      <p class="sec-lead">Completa el formulario y un asesor de WeTrade te contactará para guiarte en la activación de tu bono del 100%.</p>
+      <ul class="form-perks">
+        <li><span class="perk-ico">💰</span>Bono del 100% acreditado en menos de 24 horas</li>
+        <li><span class="perk-ico">📈</span>Acceso inmediato a más de 120 instrumentos financieros</li>
+        <li><span class="perk-ico">🛡️</span>Protección de saldo negativo incluida</li>
+        <li><span class="perk-ico">📱</span>Opera desde la app o plataforma web</li>
+        <li><span class="perk-ico">🎯</span>Apalancamiento de hasta 1:2000</li>
+      </ul>
+    </div>
+
+    <!-- Right: WeTrade registration iframe -->
+    <div class="iframe-outer">
+    <div class="iframe-wrap">
+      <div class="iframe-header">
+        <div class="iframe-header-left">
+          <div class="iframe-header-dot"></div>
+          <div>
+            <div class="iframe-header-title">Crear cuenta WeTrade</div>
+            <div class="iframe-header-sub">Proceso seguro · Menos de 2 minutos</div>
+          </div>
+        </div>
+        <span class="iframe-badge">🔒 Seguro</span>
+      </div>
+      <iframe
+        src="https://register.wetradebroker.com/ld-register?source=LATAM_LP_BONUS_2026&language=es"
+        style="width:100%; border:none; overflow:hidden;"
+        scrolling="no"
+        frameborder="0"
+        title="Registro WeTrade — Bono 100%">
+      </iframe>
+    </div>
+    </div><!-- /iframe-outer -->
+
+  </div>
+</section>
+
+<!-- ═══ KEY TERMS ═══ -->
+<section id="terminos">
+  <div class="reveal">
+    <div class="sec-label">Términos del bono</div>
+    <h2 class="sec-title">Todo de un <span class="w">vistazo</span></h2>
+  </div>
+  <div class="terms-grid reveal">
+    <div class="t"><div class="t-ico">💵</div><div class="t-body"><strong>Depósito mínimo</strong><span>$100 USD por depósito elegible</span></div></div>
+    <div class="t"><div class="t-ico">🎯</div><div class="t-body"><strong>Bono máximo</strong><span>Hasta $10,000 USD por cuenta</span></div></div>
+    <div class="t"><div class="t-ico">📁</div><div class="t-body"><strong>Cuentas con bono</strong><span>Hasta 3 cuentas; solo 1 activa a la vez</span></div></div>
+    <div class="t"><div class="t-ico">📅</div><div class="t-body"><strong>Válido hasta</strong><span>31 de diciembre de 2026</span></div></div>
+    <div class="t"><div class="t-ico">🌎</div><div class="t-body"><strong>Elegibilidad</strong><span>Todos los países América Latina — todas las cuentas excepto Cent</span></div></div>
+    <div class="t"><div class="t-ico">🚫</div><div class="t-body"><strong>No retirable</strong><span>El bono es crédito de trading, no se puede retirar como efectivo</span></div></div>
+    <div class="t"><div class="t-ico">⏱️</div><div class="t-body"><strong>Tiempo de acreditación</strong><span>Dentro de un día hábil tras el depósito elegible</span></div></div>
+    <div class="t"><div class="t-ico">✉️</div><div class="t-body"><strong>Cómo solicitarlo</strong><span>Envía un correo a <a href="mailto:globalsupport@wetrade.com" style="color:var(--amber);font-weight:600;">globalsupport@wetrade.com</a> después de tu depósito</span></div></div>
+  </div>
+</section>
+
+<!-- ═══ CTA BAND ═══ -->
+<div class="cta-band">
+  <div class="cta-band-inner">
+    <div class="cta-band-copy">
+      <h2>¿Listo para duplicar<br>tu capital hoy?</h2>
+      <p>Deposita desde $100 USD · Bono del 100% · Hasta $10,000 USD en menos de 24 horas<br>
+      ¿Preguntas? <a href="mailto:globalsupport@wetrade.com" style="color:var(--amber);font-weight:600;">globalsupport@wetrade.com</a></p>
+    </div>
+    <a href="#formulario" class="btn-white">
+      ¡Activar mi bono ahora!
+      <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+</div>
+
+<!-- ═══ DISCLAIMER ═══ -->
+<div class="disc">
+  <div class="disc-title">Términos y Condiciones — Campaña Bono de Crédito 100%</div>
+
+  <p>Al participar en esta campaña, el cliente acepta los presentes Términos y Condiciones. La información aquí contenida constituye la base de su participación y es responsabilidad del cliente leer y comprender todas las disposiciones. Para consultas, comuníquese con el soporte de WeTrade o escriba a <a href="mailto:globalsupport@wetrade.com" style="color:#666;">globalsupport@wetrade.com</a>. Estos términos no podrán ser reemplazados ni modificados salvo comunicación oficial por escrito de WeTrade.</p>
+
+  <p><strong style="color:#666">Detalles de la promoción:</strong> Esta campaña está disponible únicamente para clientes residentes en países de LATAM. Vigencia: hasta el 31 de diciembre de 2026 (hora de la plataforma). Bono: 100% sobre depósitos elegibles. Depósito mínimo: USD 100. Bono máximo: hasta USD 10,000 por cuenta. Cuentas elegibles: todos los tipos de cuenta excepto Cuentas Cent.</p>
+
+  <p><strong style="color:#666">Condiciones principales:</strong> (1) La campaña aplica a cuentas recién abiertas o cuentas adicionales creadas durante el período de campaña. (2) Las cuentas que participen en esta campaña podrían no ser elegibles para otras promociones, salvo indicación contraria de la Compañía. (3) El depósito mínimo para calificar es USD 100 por depósito, incluidos los depósitos subsecuentes. (4) Se otorgará un bono de crédito del 100% sobre cada depósito elegible. (5) Para solicitar el bono, el cliente debe enviar una solicitud a <a href="mailto:globalsupport@wetrade.com" style="color:#666;">globalsupport@wetrade.com</a> tras realizar el depósito; el bono será acreditado dentro de tres (3) días hábiles. (6) El bono acumulado máximo por cuenta es USD 10,000. (7) Cada cliente puede tener un máximo de tres (3) cuentas con bono, pero solo una (1) puede estar activa en cualquier momento.</p>
+
+  <p><strong style="color:#666">Uso del bono y retiros:</strong> El bono de crédito no es retirable y solo puede utilizarse como margen de trading. Las ganancias generadas son totalmente retirables sin restricción. Los fondos depositados pueden retirarse en cualquier momento, sujeto a los ajustes de bono correspondientes. Cualquier retiro o transferencia interna resultará en una deducción proporcional del bono, lo que podría reducir el margen disponible y generar un margin call o stop-out. Las pérdidas reducirán el equity de la cuenta, pero no reducirán el bono de forma progresiva. Cuando el equity de la cuenta sea igual al monto del bono, el bono será eliminado automáticamente y el saldo de la cuenta quedará en cero. El bono permanecerá activo mientras el cliente continúe operando y cumpla con todas las condiciones. Las transferencias internas entrantes son elegibles para asignación de bono; sin embargo, las transferencias salientes activarán la eliminación proporcional del bono.</p>
+
+  <p><strong style="color:#666">Prácticas prohibidas:</strong> Se prohíben estrictamente las siguientes prácticas y pueden resultar en descalificación, eliminación del bono o suspensión de la cuenta: trading de arbitraje (incluyendo arbitraje de latencia), abuso de trading de alta frecuencia, estrategias de cobertura maliciosa, abuso de múltiples cuentas, y cualquier actividad considerada abusiva o explotadora. La Compañía se reserva la discreción exclusiva para determinar si la actividad de trading constituye comportamiento abusivo.</p>
+
+  <p><strong style="color:#666">Derechos de la Compañía:</strong> WeTrade se reserva el derecho de rechazar la participación, descalificar clientes o deducir ganancias obtenidas mediante prácticas de trading incorrectas. Si la eliminación del bono ocurre mientras hay posiciones abiertas, la Compañía no será responsable de las pérdidas resultantes. WeTrade se reserva el derecho de terminar, modificar o enmendar esta promoción en cualquier momento sin previo aviso, y retiene los derechos de interpretación final de esta promoción. En caso de inconsistencia entre versiones en distintos idiomas, prevalecerá la versión en inglés. Al participar, los clientes confirman haber leído, comprendido y aceptado estos Términos y Condiciones.</p>
+
+  <p><strong style="color:#555">Advertencia de riesgo:</strong> Operar con CFDs y Contratos de Margen FX conlleva un riesgo significativo y puede no ser adecuado para todos los inversores. Puede perder más de su depósito inicial. WeTrade International LLC está autorizada y regulada por la FSA de San Vicente y las Granadinas (LLC No. 1945 LLC 2022). WeTrade Capital Limited está regulada por la Autoridad de Servicios Financieros de Labuan (MB/22/0100). WeTrade International CY Limited está regulada por CySEC (licencia 435/25).</p>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="footer-brand"><img src="data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCABQAUADASIAAhEBAxEB/8QAHAAAAQUBAQEAAAAAAAAAAAAAAAQFBgcIAwIB/8QARxAAAQMDAgMGAgUICAQHAAAAAQIDBAAFEQYSByExEyJBUWGBcZEIFaGxshQyNUJScnOSIzM3U4KzwdIWF1XRNDZDY3Si4f/EABsBAAIDAQEBAAAAAAAAAAAAAAAFAwQGAgcB/8QAOBEAAQIEAwUHAwIFBQAAAAAAAQIDAAQFESExQQYSUWFxExQigZGhscHR8OHxBxYyQrIVI1Jy0v/aAAwDAQACEQMRAD8AxlRRRRBBRRRRBBRRRRBHWJGkTJTcWIw7IfdUEttNIKlLJ6AAcyav3hT9HiVOLVz1y8qHHOFJtzKv6VY/9xQ5IHoMnn1Sa58B9b8MtOwosV2G/b728kNyZ0hreFqJ6JWCShHTlgDzz1rSUOW262hxpxK0KAKVJOQR5g1i67W5tlRabQUDicz00+vSNfSKJLut9stYWeAyHX89Yx79Ifh0jQeq0LtjS02O4J3xMqKuyUMb2yo8zjkRnwI64NVjW9eKOk4mu9EzLFI2IfUO1iPK/wDSeSDtV8OZB9Cawnc4Mq2XGTbpzKmJUZ1TTzahzSpJwR86abPVMzsvuOHxpz5jQ/eFNap/dHrpHhVl9oTUUUVoITQUUVLtB6Gmatiyn405iMI6wghxJOcjPhUMxMNy7ZcdNgIsyko9OOhlhO8o6REaKnureGVw07YJF3fuUV9tgpBQhKgTuUE+PxqBVzLTbM0jfZVcZR3OyExIuBuYTuqIv5eXSCiiirEU4KKKKIIKKKKIIKKKKIIKKKKIIKVW23z7lIMe3QpEx4JKuzYbK1YHU4HhzpLVj/R4/wDPzn/wXPxIqpPzJlpZbwFykXi7TpUTc02wo2CjaIkvSWqUIUtenLulKRkkw3AAPlTLWw7t+ipf8Bf4TWPKV0KsLqQWVpA3bZc7w32iobdJU2EKKt6+fK33gooop/Gbgooooggooooggooooggoooogif6b4Zyb5ZIt1jXiMlt9GdpaJKSCQR18CDTFrnSkvSk2PHkPokIfbK0OISQMg4I5+I5fOp9wBu/aRJ1kcV3mlCQyCf1TyUPY4/mp542Wn6w0gZjacvQHA6PPYeSh9x/w1lBVJlip93eVdBNshrlHop2ekJug99lUWcCbnEnFP9WHkSPKKGqX6F0JO1VBfmNS2orTTnZgrQVbzjJxjyyPnUQrTOg7R9R6TgW9SNrqW97376uavkTj2phXaiuSYBbPiJw+sJdkqI3VZtQfF0JFzpich8nyindZ8Op+mrN9aLnMymkuJQtKEFJSD0PPwzge9QitTajtqLxYJtscxiQypAJ8Ffqn2OD7Vlx9pxl5bLqShxtRSpJ6gg4Irig1JydaUHTdQPsfwxLtfQmaU+gy4shQ64jPPqIl3CDTitSayZZUjMeKgyXvgnkke6iPbNaU0Q/I03Idgy3yLXsU4krPJggFRx5JIB5efvUH+jbZRbdJvXd5GHrm7lOR0aRkJ+Z3H5U4/SBvabZokwY3ObdXPyZsJ67P1z8sJ/x0kqjxn5/uycsvufL6RoaMyKZRi+4P6hvf+R8esVgvirxGuut5crTd3uATJfUY0JKQ42hvPdGxQKRyxk/E5pwuHDrVOrLzIv2qLtDjTpZCnQ0zvOQkJHJOEjkB0JqZ8O9JxdL2ZCOzSq4PJCpT3Uk/sg/sj/8AaS664hWzS8j8iSyqdP2hSmULCUoB6blc8E+WD7cq5XUlrmOypjYBAtewuQPa3WPrGz0tLSneay6TfHdubAnTDEnp+sRGXwXfS2TF1A24vHJLsYpHzCj91QPVWkr5ppwfWcXDKjhD7Z3NqPlnwPocGrKsvGOG/MSzdLSuIyo47Zp7tNvqU4Bx8M/CrKkMQbtbFMvIalw5LfMHvJWkjkR9+akNXqdPcAnE3SensRhHI2eolXaUaavdUOvuFY25iMu6ctEu/Xli0wS2JD+7YXFYT3UlRycHwBq9+EmlbnpaBPZuao6lPupWjsVlQwARzyBVatRo/Dziqyud2y4LG9xpSEgrU2ttaU+WSCcH4Grk0fqq2apjyHrYmQlLCghfbICTkjPLBNd7Rzb7rI7IXZUAb21v+0V9j5CVYmFduq0wlSgE30sNPXGPPEWzS7/pCZaoJaEh4tlJcVhPdWlRycHwBqmbtwu1LbLZJuElyAWYzSnV7XlE4SMnHdq9tSXmJYLM9dZwdMdkpCg2nKu8oJGBkeJFV3qrijpq56auVujN3APSYzjSN7KQMqSQM96l1Emag2gIl0XQVYm3S/tDfaaTpLzhcm3LOBOAvbjbDreIDw+0RJ1giaqPPai/kpQDvQVbt27y/dp01ZwuuFgsrly+sWphStCEstMq3LKlBIA9zUj+jd/UXz95j7nKt0oQvG9KVYORkZwfOrtUrs1KT6m0nwC2FhwBzhXRdmJGfpSHlps4oHG5wNyAbXthFD6f4P36cwl+5SmLYlQyGykuOD4gEAfOonq3Tj1l1a/p6K45cHWygIKGiFOFSEqwEgn9rFX5qLiFpaxylxJU8uyUHC2o6CspPkT0B9M5qm79rBocUlartHaFkLaISsbStIbShaSPXBFXaTPVOZdUt1Ph3SUi1hfC2OcLK7TKNJsobYXde8Ao3uQmxvhe3DSFtj4R6onoS7MMa2tnnh5e5zH7qc/aRUhb4IZb7+pcL9IWR+OpZfeKGlbWw2pElyc642lxLUZIJAUMjcSQAfTOR5VG2+NsLttq9PyEtZ/OEgFWPht/1qh3yvzPjbRujoB/ljDI0/ZeTPZur3j1Uf8AHCI/fODl/hsqdtsyLcQkf1Yy04fgDy+2q5lx5ESS5GlMuMPtnattxJSpJ8iDWrtMX63ajtKLlbHStlRKVJUMKQodUqHgar36QmnmHrQzqNhsJkR1pafUB+e2rkCfUHA9/SpqTtDMKmRKzgxJte1iDwIitXNl5VMoZyROAF7XuCOIPvFINoW44lttClrUQEpSMkk9ABViac4QajuTKX7g6xam1DIS6Ct3HqkdPgSD6VKOAekmG4A1ROZC5DpUmGFDkhA5FY9Scj4D1qzr5dbfZba7cbnJRHjNjmpXifAAdST5CvtX2ieQ+ZaUGIwvnjwAjmh7KsOSwm544EXAvYW4k/thFSyOBzoazH1GhbmOjkQpST8Qs4+Ve+FOkb1pXiOWrpHT2TkJ0NPtHc253kdD4H0ODTmvjZYkytiLVcVMZx2ncCsee3P+tWDpm+2vUVsTcbVIDzJO1QIwpCvFKh4Glk5P1dqXUibTdKha5Aw9PrDWRptDemUrkV2Wg3sCTe3I/IhVdv0VL/gL/Cax5Ww7t+ipf8Bf4TWaOFmlf+LNToiv7xBYT2spSTglPgkHzJ5fDJ8Ks7KPol2Jh1w2AsfmKW2cs5NTEsy2LqVvAe0J9H6I1Dqk77bECYwOFSXjsbB+PU+wNWBE4FvKbBlakbQvHNLcQqA9yofdVwgQbTbMJDMSFFazgAJQ2hI+wAVVd543w2ZimrVZHJbCTgPPP9nv9QnaeXxPtXKa1Vqk4e5JskdPcnC/SBVCo1KbT39W8o9fYJxt1hhvnBS+xGVO2u4RbjtGezUksrV8Mkj5kVWlxhS7dMchz4zsaQ0cLbcSUqHtWkuHvEe06tfMLsFwLgElQYWsKCwOu1WBnHlgH7a+cX9Gx9TafdlMMpF1htlbDgHNwDmWz5g88eR96nk9oZuVmRLVFNr65W54YEdIrT2zclNSpmqYq9tMwbaY4g9YzNRRRW4jAwUUUUQQUUUUQQ/8Pbv9SaugTVL2slzsnvLYrkSfhnPtWjp0ZqZCfhvp3NPtqbWPNKhg/fWUq0lw5u/11o+DLUrc8hHYvee9PIk/EYPvWP2oliCiZT0PyPrHpv8AD6eCg7IryPiHwr6e8U7onTTr/Edu0SUZTBfUuRkcils/cTtHvV6alubdmsM26OYxHaKgD+sroke5IHvXK32KLD1Hcb22B285ttChj83aCDj4935VBOP147K3wrI0vvvq7d4D9hPJI9zk/wCGl7r5rE60jSwv8q+0OWJROzNKmHf7iTb1sj7+ZifaRuqb3pqDcwRufaBcA8FjkofMGqb4maaeHElMSIjAuziHGjjkFKOFf/bJ96kf0f7vviz7G4vm2oSGQT+qeSh7Hb86sO5W6HIu0C5PIzJhdp2J8t4wa+NuKpNRcSBhY288R+dY7MonaekMEnxXF/I2V7XI8of7KyxbrdGgRhtZjtJaQPRIwKpvV95RqTjlbIQXviW19LKBnIK095Z/mGP8NWJqi+psWmp10JG5lo9mD+ss8kj5kVnDTt1XbtTwru8pSy1JS66epUM973IzVujSSnUuva2IHUj89Yo7YTzUo7LymQ3gpX/UHD6+kamqv7vwrtF0ukq4ybpcS9JdU4vBRgEnOB3eg6VPWXG3mUPNLSttaQpCknIUDzBFU7xQRrax3iRNhXW6KtLyi4hbTqilnPVBx0APTwxik1HS8p4oZc3FHjryh1tIuVRLJdmWC6kHTTn0h7/5N2H/AKncvmj/AG1O9M2lux2SPamZD0huOClC3SCrBJOOQ8M4+FZyTrDValBKb/ciScAB9XOn+UeJkTT315Jn3ZqIFYIU+oLSP2inqE+GTTudpM66EomJgWJwvx5RlKbtBTJdSnZOTUCBiRjYc8YffpGsITLsskDvuNvIJ9ElBH4jTh9HT9E3b+Oj8JqpLteLrdi2bncJMwtZ7PtnCrbnGcZ+A+VWz9HNSTbLujPeDzZI9Ck/9jVmpSi5Si9is3It/lFKjz7dQ2lEy2LBV8DyRb6RJuNP9m9z/eZ/zUVnGtK8W4kidw+ujEVpTroShexIySEuJUfsBNZtbbccJDaFLKUlR2jOAOp+Fd7JqHc1C/8AcfgRFt6hX+ooNs0D5VFw/Ru/qL5+8x9zlWFr64vWnRt0uEdRS83HIbUOqVKISD7E5qvfo3f1F8/eY+5ypnxd/s5vH8NH+Yms/VEBdb3VZFSPhMaiirU3s3vpNiErPuqM0kkkkkknmSa6wYsmdMahxGVvvvKCG20DJUTXGrS+jpCYe1BcZriQp2PHSlvPhvPMj1wnHua3lQm+5yy3rXsP0jy+lSPf5xuXvbeOfLM+0KbDwXlOsJdvV1RGWeZZjo3kehUTjPwB+NPaeCtgxzutzJ9Cj/bU51jcZNp0tcrlDaDkiPHUtsEZAPmR5Dr7VnORrrV77qnF6hnpKjkhDmwewTgCsjIPVaqhTiHgkA2/MPmN3VGKHRClpxgrJF8/1+BF/wChNHwtIx5TEGXKkIkqStQeKe6QCOWAOufsrhxhSlfDa8BQyNiD7hxJpj4Ey7/cbTcJ95ly5LLjiExlvrKs7d27bnwyR8vSn3i//ZxeP4aP8xNJVodbqyUur3lBSbn0+MofIcZdoa1Mo3EFCrA6YH5zh20UwiNpGzstjCUwWfnsGT86qj6SM99V1tds3KDCGFPlPgVKUU59gn7TVj8LLo3dtCWp5CgVssJjujxCmxt5/EAH3qPccdITL/bo1ztbRfmQgpK2UjvONnn3fMgjp45PpU1LcRLVf/fwsVDHjjFasNrm6HaWxulJsNQLGM/VZv0dp77GsZEBKj2EmKorTnluSQQfkVD3qtlsvNvlhbTiXQdpQUkKB8sedXhwG0bOtSn9QXWOuM6812MdlxOFBBIJUR4ZwAPHr51s9oH2W5BYWf6hYcz+Yx5/szLPuVJstg+E3J4DW/XKLPu36Kl/wF/hNVj9GqO2mxXaWAO0clJbJ9EpyPxGrOu36Kl/wF/hNU99Gy7ttybnY3VhK3QmQyD4kclD5bT7GsNIoUulzO7oUnyuY9DqLiEVeU3tQsDrYRa+rLI1qKxP2d+S/HZf271skBRAIOOYPI4qBf8AJDT3/Vbp82/9tT/VcGdctPy4dsnOQZq0ZYfQspKVg5GSPA4wfQ1nK9ah4gWacuFc7xeYr6Dja48oZ9QehHqOVWKA1OPtqRLPhFjlr1yintG9Iy7iXJqXK7i29p0zi3bBwks1lvUO6xLtc+2iupcSCpGFY6g4T0IyD6GrHrLdl1BxBvM1MO13e9S31H81t5Rx6k9APU8qUapu/EPTV1Vbbrfrm28EhSVJkqKFpPik+I/7Vdm6BNzbwQ/MJK7YDW0LpTaKSk2StiWUlF8Tpf1iN6ojtxNTXSK0AG2ZjzaAPABZA+6m2p3oDh9dtb9vdH5oiRC6d8lxJcW6vqrAyM9eZJHXx50o4g8LLjpe2Kusaci4wmyA8ez7NbeTgHGSCM4Gc+PStWmqyjbqZVTg38Brn1yv5xj10iccZVNpbPZ4nTLpnbnaK8oooppCmCiiiiCCrR4BXfsp82yOK7rye3aB/aTyUPiRj+Wqur6lSknKSQfMGqk9KJm2FMk2vDKkVJdNnETKRfd04g4ERrMVmziJePrzV86ahe5lK+yZ8tieQI+PM+9MXbvf3zn8xrnS2lUQSDinCreJFsrW9zD3aLatVYZSylvcANzje/DQc4f+Ht4+o9XwJy1bWe07N7ny2K5En4Zz7VoCTKDkpW091JwKzBXvtnf71f8AMakqNHTOOh0KsQLZRLsvteaG0tpTW+CbjG1uOhzwiz+OF73ph2NpfQ9u+PsQPxH5VVtfVKUo5UoqPmTXyr8nKplWQ0NIQVuqrq06uaWLXyHADIfmsWZww4jJtEdFmvpWqEnkw+BuUyP2VDqU+WOY+HS5bbcINyjiRAmMSmj+s0sKHvjpWTq6MPPMOBxh1xpY6KQog/MUmqGzjM0suNq3Sc9RD+j7aTMg0GXk9okZY2IHC+Nx+XjWLcWK252jcZlC/wBpKAD86ZtW6p09YoTqbrKZcUpJT+SJwtxwEdNvkfXArOTl5vDqNjl1nLR02qkLI++kJJJyeZqizsoN8KeduOQ+sMprb4lspl2LE6k39gBf1jtcHWHpz70WP+TMLcUptndu7NJPJOfHFSnhTqpvS+oFKl7vyCWkNvlIyUYPdXjxxk+xNQ+itTMSzb7JZXkRaMJKzrsrMJmWjZQN+XpwjXFvnQ7jFRKgymZLCxlK2lhQPyrxKhW4xJSHmI7bL7akPq2hIUkjByayhElyoi+0iyXo6/2mllJ+yuky43CYkJlzpUgDoHXVL+81kv5SUF+F6w6Y/Mb3+fkKbsuXurrh8RcfAOMiHM1NEafbkNsyGkJdbUFJWAXAFAjqDUq4u/2c3j+Gj/MTWakOLRnYtSc9cHFfVOuqBSp1ZB8Co0wf2fLs6JsuapNrcLc9bcIUS21aWKaZEM5hQvvf8idLaX4x4qUcM9Uf8K6lRMdSpcR5HYyUp67SQdw9QQD8x41F6KfvsImG1NOC4OEZWVmXJV5LzRspJuI1xabnbbzBTKt0tmXHWOqFZ6+BHUH0NNDmhdHGSqWuwQgvO490hH8udv2VmONIkRnO0jPusrH6zayk/MV3l3W6S2+zlXKZIR+y6+pQ+RNZMbKutLPYvlIPW/scY3SttWH0DvEsFKHMW9wbRp2yais069P2K0LadEJgKcUzjskc8BCccjj05Dp8EXF/+zi8fw0f5iazKhxaCShak58jivSn3lJKVPOKB6gqNdo2US1MIdQ5gkg4jO3O+sQObaqellsuNYqBFwbAA4DC2nXGJdwv1u9pG4rS8hb9skEdu0k80nwWnPj6eI+ArQ1hvtovsUSbTPZlIxkhCu8n95J5j3FZHr2y66y4HGXFtrHRSVEEe9Xqrs8zPr7VJ3V8cweohbRdqZimo7FSd9GgyI6H6RsUIQXO02J3gY3Y50zDVdmXqaPp6NKRJnOhalpaUFJaCUk94+fLp1rL0i8XeQ0WpF0nPNkYKVyFqHyJpGhSkK3IUUnzBxSlrY4AHtHb4YWH6+0OX9uySOyZsL43OnAYe+PSNg3b9FS/4C/wmsjWm4S7VcmLjAeUzJYWFtrHgf8AUeGK5GQ+RgvukfvmuVOqPRRTkOJUreCraW48zxhBXa+aottaUbhRfW+duQ4RpLQnE6x3+O2xcH2rZcsYU26ra2s+aFHl7Hn8etTpxpiS0A62282eYCkhQNYzpXDudyhp2w7hLjp8mnlIH2GlM3se2te/Lr3eRF/Q/vDeT22dQgImW97mDb1FrfEbASmNDYJAZjsp5kgBKR6+VU1x01hpa62xNnhJbuU5tYUiU2e5H88KH52RywOXj1Aqoplwnzf/ABk2TJx/euqX95pNU9N2WTKvB9xwqIxFsPXG5ivVdrlzjBYabCUnA3x9MLD3jRnAC7wZeh2bU06gTIK3A62T3iFLKgr1Hex7U7cYLvBteg7k3KcR2sxlUdhonvLUoYyB6dc+lZhjPvxnkvR3nGXU80rbUUqHwIr1Mlypj3bS5L0hzGN7qytXzNDmyyVz/ee08JO9a2N73z4Xj41tYtFP7r2fiCd298LWtlxtHGiiitZGPgooooggooooggooooggooooggooooggooooggooooggrrDYXKlsxmsdo84ltOTyyTgVypXZnm494hSHlbW2pDa1nGcAKBNcrJCSRnHbYBWArK8drbZp1xnSIURCXH2ELWpO787acEJ8ySeQ8aTCI6beub3Q0h0NEZ57iCf9DThAnssTLs92ykF9hxLCgDkqLiSPh0pRdrpCn6f5At3J2UlySgJ7iylCh2g8irdzHnkjkcCt2jwXa2GH6/mkXAzLlu+9iL658PP58oZIjSH3w25JajJOf6R0KKR/KCfspZebWLYoNruESQ6QlRbZDmQlSQoHvIAxgjxzzpupx1FJZl3Pto696OwYRnBHNLSEnr6g1Mre7QWOFj9Irp3OxVceK49Mb/A9YUSNPvtOOsInQn5TTZcXHQpYWEhO443JCSQOeASabhEdNvM7u9kHQ1157sZ+4VI5l7tTlyuD0eM2y85HKI8z+kJ3bAkgpJwNw3JBxyJB9aa7a5DkWV+2yZiIbn5Qh9pxxC1IICVJUk7ASDzBHLzqs269u3WDppjjnl+/GLbzDG/uoI11wwyz19srQk+rZZdgsoQHHJyQphCTzOVlAHxyk19uEBuK3uRcYUpQXsUhlS8pP+JIBHLqMilVzlx1Tra1FlrS3CZQ1+VISQc71LK0jkeRUcdCcDpSm9yYb9sX28uBNnl1JbdiRlNEIwrd2mUICiTt8CevPz77Ry6bjA8ueuHDmDEZaa3VAEXHPljbHjyIPLOEz1kbatqbh9c25TK1rbRtD2VLSlJKRlvrhSeuBz601NJ3uJRuSjcQNyjgD1PpTg/KYVpiJCSv+nbmvuqTg8kqQyEnPTqhXyptqVnf3TvHU/MQv7m8NwYWHxjDmzYrg7KuUZKEB23IcXIBVj8w4UB5nkTjyBPhSR2I63BYmLKQh5a0IGe93duTjy72PY+VSORqCI0i2y425yU4429cm1JwFFpHZhOfHcCtR/f9KadTyIbs5uNbXlvQIjKWWFqTtKhzUpWPDK1KPyqBl15SgFCw+2B98uIid9mXQglCrnrxxHtcHgY+Xazotrkhh66wHJMdZbcYbDu7cDggEoCeXPx8KbmEJceQ2t1DKVHBWsHan1OAT8gak2sJzFxl3CQxdLO4w7IW6023ALb5SVEgFfYg5weeVc/M1FqklVLW3def5yERzaW0OkN5fnM/TpDrdLOm3xWX1XWC+Xmw6020Hdy0FRTnvIAHNJ6kHlXRrT7zv5M2i4QfyuS2lbMUqWFr3fmjJTsyfLdXG9ymJMa1IZXuVHhBp0YI2q7RxWPXkoU8xb1aET7atcVrtGIjaEzFdoSy8lPdUUZwoJVjlg5Hn0qFS30oBFycdBpl5e/CJ0Il1OEGwGGp1z449cBrEdtsF+fPbhM7UuLJypZwlAAJUpR8AACSfIGvMiG/HuLkB5IS+26WlDPIKBxTjZZsCFBnOykuyJUkBhKG3NhS2ea1bik8zhKceRVXq8T7fMlW+ewlbLqUobkNrVvP9HgJXuwAcpwPPKST1qXtHO1I3fD9c/TTrEHZNdkDveLhyy9dc8ukfJOnnW35EaPcYEyVHKg5HZUsL7ud2N6UhWMHkCTypLbbYZkWRKXNixGGFoQpb285UvcQAEJUf1FU9l+0xNVP6gTd2JSW5a5TEdlp3etW4qQFb0JATnGeZ5ZwDSTTM5mPaLhFVMgxnnnmFoMyL26ClIcCuWxYB7yeePPnUIde7MkXv4dLHE46aDlE5ZY7UA2t4tbjAYa6nnDLMZQw+ptuSzJSMYcaCgk/zAH7K40qupCpzixIiyN2CVxmi22eXgnanHyFJavIJKRf8+IXrACjb8+fmCiiiuo5goooogj/2Q==" alt="WeTrade" style="height:24px;display:block;mix-blend-mode:screen;opacity:0.85;"></div>
+  <p>© 2025 WeTrade. Todos los derechos reservados. El trading implica riesgos.</p>
+</footer>
+
+<script>
+  /* ── Scroll reveal ── */
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('on'); revealObserver.unobserve(e.target); }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+  /* ── Countdown ── */
+  const target = new Date('2026-12-31T23:59:59');
+  function tick() {
+    const diff = target - new Date();
+    if (diff <= 0) return;
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    document.getElementById('cd-days').textContent  = String(d).padStart(3,'0');
+    document.getElementById('cd-hours').textContent = String(h).padStart(2,'0');
+    document.getElementById('cd-mins').textContent  = String(m).padStart(2,'0');
+    document.getElementById('cd-secs').textContent  = String(s).padStart(2,'0');
+  }
+  tick(); setInterval(tick, 1000);
+</script>
+</body>
+</html>
