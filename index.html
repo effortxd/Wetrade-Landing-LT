@@ -4,6 +4,22 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>WeTrade | Bono de Crédito 100% – Hasta $10,000 USD</title>
+
+<!-- ── Security headers (backup for hosts that don't set them server-side) ── -->
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+<meta name="robots" content="noindex, nofollow">
+
+<!-- ── Content Security Policy ── -->
+<meta http-equiv="Content-Security-Policy" content="
+  default-src 'self';
+  script-src 'self' 'unsafe-inline';
+  style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+  font-src https://fonts.gstatic.com;
+  frame-src https://register.wetradebroker.com;
+  img-src 'self' data:;
+  connect-src 'none';
+">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -23,7 +39,7 @@
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; overflow-x: hidden; max-width: 100%; }
   body {
     background: var(--black);
     color: var(--white);
@@ -32,6 +48,8 @@
     overflow-x: hidden;
     line-height: 1.65;
     -webkit-font-smoothing: antialiased;
+    max-width: 100vw;
+    word-break: break-word;
   }
 
   /* ─────────────────── NAV ─────────────────── */
@@ -42,6 +60,7 @@
     background: rgba(10,10,10,0.94);
     backdrop-filter: blur(16px);
     border-bottom: 1px solid rgba(255,255,255,0.06);
+    max-width: 100%; overflow: hidden;
   }
   .nav-logo { display:flex; align-items:center; }
   .nav-right { display: flex; align-items: center; gap: 16px; }
@@ -63,6 +82,8 @@
     padding: 72px 6vw 0;
     position: relative; overflow: hidden;
     background: var(--black-true);
+    max-width: 100%;
+    width: 100%;
   }
   .hero-glow {
     position: absolute; right: 0; top: 50%; transform: translateY(-50%);
@@ -86,6 +107,8 @@
     border-radius: 50px; padding: 8px 18px;
     font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
     color: var(--orange); margin-bottom: 22px;
+    max-width: 100%; box-sizing: border-box;
+    white-space: nowrap; overflow: hidden;
   }
   .badge-dot {
     width: 6px; height: 6px; border-radius: 50%; background: var(--orange);
@@ -96,6 +119,7 @@
   /* Flags strip */
   .flags-strip {
     display: flex; align-items: center; gap: 5px; flex-wrap: wrap; margin-bottom: 28px;
+    max-width: 100%; overflow: hidden;
   }
   .flags-label {
     font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
@@ -115,6 +139,7 @@
     display: inline-flex; align-items: center; gap: 10px;
     background: rgba(255,255,255,0.04); border: 1px solid var(--border);
     border-radius: 10px; padding: 12px 20px; margin-bottom: 32px;
+    max-width: 100%; flex-wrap: nowrap; overflow: hidden;
   }
   .cd-label { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--grey); white-space: nowrap; }
   .cd-unit { display: flex; flex-direction: column; align-items: center; gap: 2px; min-width: 38px; }
@@ -124,12 +149,12 @@
   @keyframes cblink { 0%,100%{opacity:1} 50%{opacity:0.15} }
 
   /* Headline */
-  .hero h1 { font-size: clamp(30px, 3.8vw, 54px); font-weight: 700; line-height: 1.18; color: var(--orange); margin-bottom: 14px; }
+  .hero h1 { font-size: clamp(30px, 3.8vw, 54px); font-weight: 700; line-height: 1.18; color: var(--orange); margin-bottom: 14px; word-break: break-word; overflow-wrap: break-word; }
   .hero h1 .w { color: var(--white); }
-  .hero-sub { font-size: clamp(13px, 1.3vw, 15px); font-weight: 400; color: var(--grey-light); max-width: 480px; line-height: 1.75; margin-bottom: 36px; }
+  .hero-sub { font-size: clamp(13px, 1.3vw, 15px); font-weight: 400; color: var(--grey-light); max-width: 100%; line-height: 1.75; margin-bottom: 36px; word-break: break-word; }
 
   /* Stats bar */
-  .hero-stats { display: flex; gap: 0; margin-bottom: 44px; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; width: fit-content; background: var(--dark-card); }
+  .hero-stats { display: flex; gap: 0; margin-bottom: 44px; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; width: fit-content; max-width: 100%; background: var(--dark-card); }
   .h-stat { padding: 20px 32px; border-right: 1px solid var(--border); text-align: center; }
   .h-stat:last-child { border-right: none; }
   .h-stat-val { font-size: 24px; font-weight: 700; color: var(--orange); line-height: 1; letter-spacing: -0.01em; }
@@ -552,58 +577,186 @@
   .hero-left { opacity:1; transform:none; }
 
   /* ─────────────────── RESPONSIVE ─────────────────── */
+  /* ── Tablet ── */
   @media(max-width:1024px){
-    .form-inner{grid-template-columns:1fr;gap:48px}
+    .hero{ grid-template-columns: 1fr 1fr; }
+    .form-inner{ grid-template-columns: 1fr; gap: 40px; }
+    .bonus-visual{ min-height: 480px; }
+    .bonus-card{ width: 340px; }
+    .bonus-glow-ring{ width: 420px; height: 420px; }
+    .bonus-spin-ring{ width: 380px; height: 380px; }
+    .bonus-spin-ring2{ width: 350px; height: 350px; }
   }
+
+  /* ── Small tablet / large phone ── */
   @media(max-width:900px){
-    .hero{grid-template-columns:1fr;padding-bottom:60px}
-    .hero-right{display:none}
-    .hero-glow{opacity:.25}
-    .steps-wrap{grid-template-columns:1fr}
-    .step{border-right:none;border-bottom:1px solid var(--border)}
-    .step:last-child{border-bottom:none}
+    /* Hero: single column, hide card */
+    .hero{
+      grid-template-columns: 1fr;
+      padding: 80px 5vw 56px;
+      min-height: auto;
+    }
+    .hero-right{ display: none; }
+    .hero-glow{ opacity: .2; }
+    .hero-left{ padding: 40px 0 40px; padding-right: 0; }
+
+    /* Steps: stack vertically */
+    .steps-wrap{ grid-template-columns: 1fr; }
+    .step{ border-right: none; border-bottom: 1px solid var(--border); padding: 36px 24px; }
+    .step:last-child{ border-bottom: none; }
+
+    /* Sections */
+    section{ padding: 72px 5vw; }
   }
+
+  /* ── Mobile ── */
   @media(max-width:640px){
-    section{padding:56px 4vw}
-    .hero{padding:70px 4vw 56px}
-    .hero-left{padding:32px 0 32px}
-    .nav-cta{font-size:11px;padding:9px 14px}
-    .nav-lang{display:none}
-    .hero-badge{font-size:10px;padding:5px 13px;letter-spacing:.04em;white-space:normal;line-height:1.5;display:inline-flex;flex-wrap:wrap;gap:2px}
-    .flags-strip{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:4px;gap:4px;margin-left:-4vw;margin-right:-4vw;padding-left:4vw;padding-right:4vw}
-    .flags-strip::-webkit-scrollbar{display:none}
-    .flags-label{flex-shrink:0;white-space:nowrap}
-    .flag-item{flex-shrink:0;padding:4px 6px;font-size:16px;border-radius:6px}
-    .flag-name{display:none}
-    .countdown-wrap{width:100%;justify-content:center;gap:6px;padding:8px 14px;flex-wrap:nowrap}
-    .cd-label{display:none}
-    .cd-num{font-size:20px}
-    .cd-uname{font-size:8px}
-    .cd-colon{font-size:16px;margin-top:1px}
-    .cd-unit{min-width:34px}
-    .hero h1{font-size:clamp(26px,7.5vw,38px)}
-    .hero-sub{font-size:13px;margin-bottom:28px}
-    .hero-stats{flex-direction:row;overflow-x:auto;width:100%;-webkit-overflow-scrolling:touch}
-    .h-stat{flex-shrink:0;border-right:1px solid var(--border);border-bottom:none;padding:14px 18px}
-    .h-stat:last-child{border-right:none}
-    .h-stat-val{font-size:20px}
-    .hero-ctas{flex-direction:column;align-items:stretch}
-    .btn-orange{justify-content:center}
-    .btn-outline{text-align:center}
-    .how-grid{grid-template-columns:1fr}
-    .sc-grid{grid-template-columns:1fr}
-    .frow-2{grid-template-columns:1fr}
-    .iframe-outer{border-radius:14px}.iframe-wrap{padding:12px}
-    .terms-grid{grid-template-columns:1fr}
-    .cta-band{padding:52px 4vw}
-    .cta-band-inner{flex-direction:column;align-items:flex-start;gap:20px}
-    .cta-band-copy h2{font-size:clamp(22px,6vw,32px)}
-    .btn-white{width:100%;justify-content:center}
+
+    /* ── Base ── */
+    *, *::before, *::after{ -webkit-tap-highlight-color: transparent; }
+    section{ padding: 56px 5vw; }
+
+    /* ── Nav ── */
+    nav{ padding: 0 5vw; height: 62px; }
+    .nav-logo img{ height: 26px; }
+    .nav-lang{ display: none; }
+    .nav-cta{ font-size: 11px; padding: 9px 16px; }
+
+    /* ── Hero ── */
+    .hero{ padding: 70px 5vw 52px; overflow: hidden; }
+    .hero-left{ padding: 28px 0; max-width: 100%; overflow: hidden; }
+
+    /* Badge — two lines on mobile, never overflow */
+    .hero-badge{
+      font-size: 9px; padding: 6px 12px;
+      letter-spacing: .03em; line-height: 1.5;
+      white-space: normal; flex-wrap: wrap;
+      max-width: 100%; box-sizing: border-box;
+      display: flex; width: fit-content;
+      border-radius: 10px;
+      margin-bottom: 14px;
+      overflow: hidden;
+    }
+
+    /* Flags — scroll within bounds, no bleed */
+    .flags-strip{
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      gap: 4px;
+      width: 100%;
+      max-width: 100%;
+      padding-bottom: 4px;
+      margin-bottom: 18px;
+      /* no negative margins — contained by parent padding */
+    }
+    .flags-strip::-webkit-scrollbar{ display: none; }
+    .flags-label{ flex-shrink: 0; white-space: nowrap; font-size: 9px; }
+    .flag-item{ flex-shrink: 0; padding: 3px 5px; font-size: 15px; }
+    .flag-name{ display: none; }
+
+    /* Countdown */
+    .countdown-wrap{
+      width: 100%; justify-content: center;
+      gap: 4px; padding: 8px 12px;
+      flex-wrap: nowrap; margin-bottom: 22px;
+    }
+    .cd-label{ display: none; }
+    .cd-num{ font-size: 19px; }
+    .cd-uname{ font-size: 8px; }
+    .cd-colon{ font-size: 15px; margin-top: 1px; }
+    .cd-unit{ min-width: 30px; }
+
+    /* Headline */
+    .hero h1{ font-size: clamp(26px, 7vw, 36px); line-height: 1.15; word-break: break-word; overflow-wrap: break-word; }
+    .hero-sub{ font-size: 13px; line-height: 1.65; margin-bottom: 24px; word-break: break-word; }
+
+    /* Stats bar — horizontal scroll */
+    .hero-stats{
+      width: 100%; max-width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      border-radius: 10px;
+      margin-bottom: 28px;
+    }
+    .h-stat{ flex-shrink: 0; padding: 14px 20px; }
+    .h-stat-val{ font-size: 20px; }
+    .h-stat-lbl{ font-size: 8px; }
+
+    /* CTA buttons */
+    .hero-ctas{ flex-direction: column; align-items: stretch; gap: 10px; }
+    .btn-orange{ justify-content: center; padding: 15px 24px; font-size: 13px; }
+    .btn-outline{ text-align: center; padding: 13px 24px; font-size: 12px; }
+    .hero-footnote{ font-size: 10px; margin-top: 16px; }
+
+    /* ── Sections headings ── */
+    .sec-title{ font-size: clamp(22px, 6vw, 32px); }
+    .sec-lead{ font-size: 13px; }
+    .sec-label{ font-size: 10px; }
+
+    /* ── How it works ── */
+    .how-grid{ grid-template-columns: 1fr; gap: 12px; margin-top: 36px; }
+    .how-card{ padding: 32px 24px; }
+    .how-n{ font-size: 42px; }
+
+    /* ── Scenarios ── */
+    .sc-grid{ grid-template-columns: 1fr; gap: 14px; margin-top: 36px; }
+    .sc{ padding: 30px 22px; }
+
+    /* ── Steps ── */
+    .steps-wrap{ margin-top: 36px; }
+    .step{ padding: 32px 20px; }
+    .step-num{ width: 46px; height: 46px; font-size: 16px; margin-bottom: 16px; }
+    .step h3{ font-size: 13px; }
+    .step p{ font-size: 12px; }
+
+    /* ── Form section ── */
+    .form-inner{ gap: 32px; }
+    .form-copy .sec-title{ font-size: clamp(22px, 6vw, 30px); }
+    .form-perks li{ font-size: 12px; }
+    .perk-ico{ width: 28px; height: 28px; font-size: 13px; }
+
+    /* ── iframe ── */
+    .iframe-outer{ border-radius: 14px; }
+    .iframe-wrap{ padding: 10px; }
+    .iframe-wrap iframe{ min-height: 680px; border-radius: 8px; }
+    .iframe-header{ padding: 12px 16px 10px; }
+    .iframe-header-title{ font-size: 12px; }
+    .iframe-header-sub{ font-size: 10px; }
+
+    /* ── Terms ── */
+    .terms-grid{ grid-template-columns: 1fr; gap: 10px; margin-top: 36px; }
+    .t{ padding: 20px 18px; }
+    .t-ico{ width: 34px; height: 34px; font-size: 15px; }
+    .t-body strong{ font-size: 10px; }
+    .t-body span{ font-size: 11px; }
+
+    /* ── CTA band ── */
+    .cta-band{ padding: 52px 5vw; }
+    .cta-band-inner{ flex-direction: column; align-items: flex-start; gap: 20px; }
+    .cta-band-copy h2{ font-size: clamp(22px, 6vw, 32px); }
+    .cta-band-copy p{ font-size: 13px; }
+    .btn-white{ width: 100%; justify-content: center; font-size: 13px; padding: 14px; }
+
+    /* ── Disclaimer ── */
+    .disc{ padding: 40px 5vw; }
+    .disc p{ font-size: 10px; line-height: 1.8; }
+
+    /* ── Footer ── */
+    footer{ padding: 24px 5vw; flex-direction: column; align-items: flex-start; gap: 8px; }
+    footer p{ font-size: 10px; }
   }
+
+  /* ── Very small phones ── */
   @media(max-width:380px){
-    .hero-badge{font-size:9px}
-    .cd-num{font-size:17px}
-    .nav-cta{font-size:10px;padding:8px 12px}
+    .hero-badge{ font-size: 9px; }
+    .cd-num{ font-size: 16px; }
+    .nav-cta{ font-size: 10px; padding: 8px 12px; }
+    .hero h1{ font-size: clamp(24px, 7.5vw, 34px); }
+    .btn-orange{ font-size: 12px; padding: 14px 20px; }
+    .iframe-wrap iframe{ min-height: 640px; }
   }
 </style>
 </head>
@@ -671,7 +824,7 @@
     <!-- Stats -->
     <div class="hero-stats">
       <div class="h-stat"><div class="h-stat-val">$10,000</div><div class="h-stat-lbl">Bono máximo</div></div>
-      <div class="h-stat"><div class="h-stat-val">100%</div><div class="h-stat-lbl">Igualación</div></div>
+      <div class="h-stat"><div class="h-stat-val">100%</div><div class="h-stat-lbl">De Bono</div></div>
       <div class="h-stat"><div class="h-stat-val">$100</div><div class="h-stat-lbl">Depósito mínimo</div></div>
     </div>
 
@@ -683,7 +836,7 @@
       </a>
       <a href="#como-funciona" class="btn-outline">¿Cómo funciona?</a>
     </div>
-    <p class="hero-footnote">Para activar, envía un correo a <a href="mailto:globalsupport@wetrade.com" style="color:var(--amber);font-weight:600;">globalsupport@wetrade.com</a> tras tu depósito.</p>
+    <p class="hero-footnote">Para activar, envía un correo a <span class="em"></span> tras tu depósito.</p>
   </div>
 
   <!-- Bonus card -->
@@ -796,7 +949,7 @@
     </div>
     <div class="step">
       <div class="step-num">03</div><h3>Solicita tu bono</h3>
-      <p>Envía un correo a <a href="mailto:globalsupport@wetrade.com" style="color:var(--amber);font-weight:600;">globalsupport@wetrade.com</a> y recibe tu bono en menos de 24 horas.</p>
+      <p>Envía un correo a <span class="em"></span> y recibe tu bono en menos de 24 horas.</p>
     </div>
   </div>
 </section>
@@ -859,7 +1012,7 @@
     <div class="t"><div class="t-ico">🌎</div><div class="t-body"><strong>Elegibilidad</strong><span>Todos los países América Latina — todas las cuentas excepto Cent</span></div></div>
     <div class="t"><div class="t-ico">🚫</div><div class="t-body"><strong>No retirable</strong><span>El bono es crédito de trading, no se puede retirar como efectivo</span></div></div>
     <div class="t"><div class="t-ico">⏱️</div><div class="t-body"><strong>Tiempo de acreditación</strong><span>Dentro de un día hábil tras el depósito elegible</span></div></div>
-    <div class="t"><div class="t-ico">✉️</div><div class="t-body"><strong>Cómo solicitarlo</strong><span>Envía un correo a <a href="mailto:globalsupport@wetrade.com" style="color:var(--amber);font-weight:600;">globalsupport@wetrade.com</a> después de tu depósito</span></div></div>
+    <div class="t"><div class="t-ico">✉️</div><div class="t-body"><strong>Cómo solicitarlo</strong><span>Envía un correo a <span class="em"></span> después de tu depósito</span></div></div>
   </div>
 </section>
 
@@ -869,7 +1022,7 @@
     <div class="cta-band-copy">
       <h2>¿Listo para duplicar<br>tu capital hoy?</h2>
       <p>Deposita desde $100 USD · Bono del 100% · Hasta $10,000 USD en menos de 24 horas<br>
-      ¿Preguntas? <a href="mailto:globalsupport@wetrade.com" style="color:var(--amber);font-weight:600;">globalsupport@wetrade.com</a></p>
+      ¿Preguntas? <span class="em"></span></p>
     </div>
     <a href="#formulario" class="btn-white">
       ¡Activar mi bono ahora!
@@ -882,11 +1035,11 @@
 <div class="disc">
   <div class="disc-title">Términos y Condiciones — Campaña Bono de Crédito 100%</div>
 
-  <p>Al participar en esta campaña, el cliente acepta los presentes Términos y Condiciones. La información aquí contenida constituye la base de su participación y es responsabilidad del cliente leer y comprender todas las disposiciones. Para consultas, comuníquese con el soporte de WeTrade o escriba a <a href="mailto:globalsupport@wetrade.com" style="color:#666;">globalsupport@wetrade.com</a>. Estos términos no podrán ser reemplazados ni modificados salvo comunicación oficial por escrito de WeTrade.</p>
+  <p>Al participar en esta campaña, el cliente acepta los presentes Términos y Condiciones. La información aquí contenida constituye la base de su participación y es responsabilidad del cliente leer y comprender todas las disposiciones. Para consultas, comuníquese con el soporte de WeTrade o escriba a <span class="em"></span>. Estos términos no podrán ser reemplazados ni modificados salvo comunicación oficial por escrito de WeTrade.</p>
 
   <p><strong style="color:#666">Detalles de la promoción:</strong> Esta campaña está disponible únicamente para clientes residentes en países de LATAM. Vigencia: hasta el 31 de diciembre de 2026 (hora de la plataforma). Bono: 100% sobre depósitos elegibles. Depósito mínimo: USD 100. Bono máximo: hasta USD 10,000 por cuenta. Cuentas elegibles: todos los tipos de cuenta excepto Cuentas Cent.</p>
 
-  <p><strong style="color:#666">Condiciones principales:</strong> (1) La campaña aplica a cuentas recién abiertas o cuentas adicionales creadas durante el período de campaña. (2) Las cuentas que participen en esta campaña podrían no ser elegibles para otras promociones, salvo indicación contraria de la Compañía. (3) El depósito mínimo para calificar es USD 100 por depósito, incluidos los depósitos subsecuentes. (4) Se otorgará un bono de crédito del 100% sobre cada depósito elegible. (5) Para solicitar el bono, el cliente debe enviar una solicitud a <a href="mailto:globalsupport@wetrade.com" style="color:#666;">globalsupport@wetrade.com</a> tras realizar el depósito; el bono será acreditado dentro de tres (3) días hábiles. (6) El bono acumulado máximo por cuenta es USD 10,000. (7) Cada cliente puede tener un máximo de tres (3) cuentas con bono, pero solo una (1) puede estar activa en cualquier momento.</p>
+  <p><strong style="color:#666">Condiciones principales:</strong> (1) La campaña aplica a cuentas recién abiertas o cuentas adicionales creadas durante el período de campaña. (2) Las cuentas que participen en esta campaña podrían no ser elegibles para otras promociones, salvo indicación contraria de la Compañía. (3) El depósito mínimo para calificar es USD 100 por depósito, incluidos los depósitos subsecuentes. (4) Se otorgará un bono de crédito del 100% sobre cada depósito elegible. (5) Para solicitar el bono, el cliente debe enviar una solicitud a <span class="em"></span> tras realizar el depósito; el bono será acreditado dentro de tres (3) días hábiles. (6) El bono acumulado máximo por cuenta es USD 10,000. (7) Cada cliente puede tener un máximo de tres (3) cuentas con bono, pero solo una (1) puede estar activa en cualquier momento.</p>
 
   <p><strong style="color:#666">Uso del bono y retiros:</strong> El bono de crédito no es retirable y solo puede utilizarse como margen de trading. Las ganancias generadas son totalmente retirables sin restricción. Los fondos depositados pueden retirarse en cualquier momento, sujeto a los ajustes de bono correspondientes. Cualquier retiro o transferencia interna resultará en una deducción proporcional del bono, lo que podría reducir el margen disponible y generar un margin call o stop-out. Las pérdidas reducirán el equity de la cuenta, pero no reducirán el bono de forma progresiva. Cuando el equity de la cuenta sea igual al monto del bono, el bono será eliminado automáticamente y el saldo de la cuenta quedará en cero. El bono permanecerá activo mientras el cliente continúe operando y cumpla con todas las condiciones. Las transferencias internas entrantes son elegibles para asignación de bono; sin embargo, las transferencias salientes activarán la eliminación proporcional del bono.</p>
 
@@ -904,6 +1057,17 @@
 </footer>
 
 <script>
+  /* ── Render email addresses (bypasses Cloudflare obfuscation) ── */
+  (function() {
+    var u = 'globalsupport';
+    var d = 'wetrade.com';
+    var e = u + '@' + d;
+    var link = '<a href="mailto:' + e + '" style="color:var(--amber);font-weight:600;">' + e + '</a>';
+    document.querySelectorAll('.em').forEach(function(el) {
+      el.outerHTML = link;
+    });
+  })();
+
   /* ── Scroll reveal ── */
   const revealObserver = new IntersectionObserver(entries => {
     entries.forEach(e => {
